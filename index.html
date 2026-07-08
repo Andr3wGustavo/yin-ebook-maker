@@ -71,13 +71,32 @@
           </div>
         </div>
         <div class="form-group" id="api-key-group">
-          <label>API Key</label>
+          <label>TTS API Key (ElevenLabs or OpenAI)</label>
           <input type="password" id="api-key-input" placeholder="sk-..." autocomplete="off">
         </div>
         <div class="form-group">
-          <label>OpenAI Text Processor Key (For structuring PDF)</label>
+          <label>OpenAI Structurer Key (For PDF understanding)</label>
           <input type="password" id="openai-key-input" placeholder="sk-..." autocomplete="off">
         </div>
+        
+        <div class="divider"></div>
+        <h2>Future Integrations & AI Agents</h2>
+        
+        <div class="feature-toggles">
+          <label class="toggle-label">
+            <input type="checkbox" id="review-agent-toggle" disabled>
+            <span class="toggle-text">Enable AI Review Agent (Auto-fix pronunciations) <span class="badge">Coming Soon</span></span>
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="youtube-upload-toggle" disabled>
+            <span class="toggle-text">Auto-Upload to YouTube <span class="badge">Coming Soon</span></span>
+          </label>
+          <label class="toggle-label">
+            <input type="checkbox" id="spotify-upload-toggle" disabled>
+            <span class="toggle-text">Auto-Upload to Spotify <span class="badge">Coming Soon</span></span>
+          </label>
+        </div>
+
         <div class="modal-actions">
           <button id="close-settings-btn" class="secondary-btn">Close</button>
           <button id="save-settings-btn" class="primary-btn">Save Settings</button>

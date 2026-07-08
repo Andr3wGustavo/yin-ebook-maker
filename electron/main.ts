@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'node:path'
+import { processDocument } from './processor'
 
 // Desabilita avisos de segurança em desenvolvimento
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
@@ -59,7 +60,16 @@ app.on('activate', () => {
 })
 
 // === IPC Handlers ===
-ipcMain.handle('process-file', async (event, filePath) => {
+ipcMain.handle('process-file', async (event, filePath, config) => {
   console.log('Iniciando processamento do arquivo:', filePath)
-  return { success: true, message: 'Arquivo recebido com sucesso' }
+  try {
+    const result = await processDocument(filePath, config, (progress, msg) => {
+      // Aqui poderíamos emitir um evento via webContents, mas estamos usando setTimeout no frontend no mock.
+      // Futuramente: event.sender.send('progress-update', { progress, msg })
+    })
+    return result
+  } catch (error: any) {
+    console.error(error)
+    return { success: false, error: error.message }
+  }
 })

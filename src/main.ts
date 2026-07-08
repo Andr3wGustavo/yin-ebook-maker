@@ -116,9 +116,17 @@ async function startProcessing(filePath: string) {
     // @ts-ignore
     if (window.electronAPI) {
       // @ts-ignore
-      const result = await window.electronAPI.processFile(filePath)
-      appendLog(result.message)
-      updateProgress(100, 'Audiobook generated successfully!')
+      const result = await window.electronAPI.processFile(filePath, {
+        provider: selectedProvider,
+        keys: apiKeys
+      })
+      
+      if (result.success) {
+        appendLog(result.message)
+        updateProgress(100, 'Audiobook generated successfully!')
+      } else {
+        throw new Error(result.error || 'Unknown error occurred')
+      }
     } else {
       appendLog('Warning: Electron API not found (Running in browser?)')
       // Mock progress for demo

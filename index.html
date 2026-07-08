@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yin Ebook Maker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Custom Title Bar for macOS / Windows -->
+    <div id="titlebar">
+      <div class="drag-region"></div>
+      <div class="title">YIN EBOOK MAKER</div>
+    </div>
+
+    <main class="app-container">
+      <header>
+        <div class="header-content">
+          <h1>Transform text to <span class="highlight">voice.</span></h1>
+          <p>Drop your PDF or Markdown file to create high-quality audiobooks.</p>
+        </div>
+        <button id="settings-btn" class="icon-btn">
+          <!-- Settings Icon SVG -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </header>
+
+      <div class="drop-zone" id="drop-zone">
+        <div class="drop-content">
+          <div class="upload-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          </div>
+          <h2>Drag & Drop file here</h2>
+          <p>Supports .pdf and .md files</p>
+          <button id="browse-btn" class="primary-btn">Browse Files</button>
+          <input type="file" id="file-input" accept=".pdf,.md" hidden>
+        </div>
+      </div>
+
+      <div class="progress-container hidden" id="progress-container">
+        <div class="status-header">
+          <span id="status-text">Processing Document...</span>
+          <span id="status-percentage">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+        <div class="log-console" id="log-console">
+          <!-- Logs will appear here -->
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay hidden" id="settings-modal">
+      <div class="modal-content">
+        <h2>Configuration</h2>
+        <div class="form-group">
+          <label>Provider</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="provider" value="elevenlabs" checked> ElevenLabs
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="provider" value="openai"> OpenAI
+            </label>
+          </div>
+        </div>
+        <div class="form-group" id="api-key-group">
+          <label>API Key</label>
+          <input type="password" id="api-key-input" placeholder="sk-..." autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>OpenAI Text Processor Key (For structuring PDF)</label>
+          <input type="password" id="openai-key-input" placeholder="sk-..." autocomplete="off">
+        </div>
+        <div class="modal-actions">
+          <button id="close-settings-btn" class="secondary-btn">Close</button>
+          <button id="save-settings-btn" class="primary-btn">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

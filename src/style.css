@@ -1,0 +1,358 @@
+:root {
+  --bg-color: #050505;
+  --surface-color: #111111;
+  --surface-hover: #1a1a1a;
+  --border-color: #333333;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --accent-color: #ffffff;
+  --accent-bg: #ffffff;
+  --accent-text: #000000;
+  --border-radius: 12px;
+  --transition-speed: 0.25s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow: hidden; /* Desktop app feel */
+  user-select: none;
+}
+
+/* Custom Titlebar for Electron */
+#titlebar {
+  height: 38px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.drag-region {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-app-region: drag;
+}
+
+.title {
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.app-container {
+  padding: 80px 40px 40px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-size: 42px;
+  font-weight: 300;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+
+.highlight {
+  font-weight: 600;
+}
+
+header p {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  -webkit-app-region: no-drag;
+}
+
+.icon-btn:hover {
+  background: var(--surface-color);
+  border-color: var(--text-primary);
+  transform: rotate(30deg);
+}
+
+/* Drop Zone */
+.drop-zone {
+  flex: 1;
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface-color);
+}
+
+.drop-zone.drag-active {
+  border-color: var(--accent-color);
+  background-color: var(--surface-hover);
+}
+
+.drop-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.upload-icon {
+  color: var(--text-secondary);
+  transition: transform var(--transition-speed) ease;
+}
+
+.drop-zone:hover .upload-icon {
+  transform: translateY(-5px);
+  color: var(--text-primary);
+}
+
+.drop-content h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.drop-content p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Buttons */
+.primary-btn {
+  background-color: var(--accent-bg);
+  color: var(--accent-text);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-speed) ease, opacity 0.2s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.secondary-btn {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-speed) ease;
+}
+
+.secondary-btn:hover {
+  background-color: var(--surface-hover);
+}
+
+/* Progress Container */
+.progress-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  animation: fadeIn 0.4s ease;
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.progress-bar-bg {
+  height: 4px;
+  background-color: var(--border-color);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-bg);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.log-console {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  height: 150px;
+  padding: 16px;
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.log-entry {
+  animation: slideIn 0.2s ease;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 1;
+  transition: opacity var(--transition-speed) ease;
+}
+
+.modal-content {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 32px;
+  width: 400px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  transform: translateY(0);
+  transition: transform var(--transition-speed) ease;
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-overlay.hidden .modal-content {
+  transform: translateY(20px);
+}
+
+.modal-content h2 {
+  font-size: 18px;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.form-group input[type="password"] {
+  width: 100%;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-speed) ease;
+}
+
+.form-group input[type="password"]:focus {
+  border-color: var(--accent-color);
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* Utils */
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Custom Scrollbar for Logs */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
